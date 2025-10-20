@@ -1,0 +1,121 @@
+<resources>
+    <string name="app_name">กระดิ่งปลุก</string>
+
+    <!-- Main Activity -->
+    <string name="main_title">กระดิ่งปลุก</string>
+    <string name="add_alarm">เพิ่มการแจ้งเตือน</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="no_alarms">ไม่มีการแจ้งเตือน</string>
+    <string name="create_first_alarm">สร้างการแจ้งเตือนแรกของคุณ</string>
+
+    <!-- Alarm Item -->
+    <string name="alarm_on">เปิด</string>
+    <string name="alarm_off">ปิด</string>
+    <string name="every_day">ทุกวัน</string>
+    <string name="weekdays">จันทร์-ศุกร์</string>
+    <string name="weekends">เสาร์-อาทิตย์</string>
+
+    <!-- Days of week -->
+    <string name="monday">จันทร์</string>
+    <string name="tuesday">อังคาร</string>
+    <string name="wednesday">พุธ</string>
+    <string name="thursday">พฤหัส</string>
+    <string name="friday">ศุกร์</string>
+    <string name="saturday">เสาร์</string>
+    <string name="sunday">อาทิตย์</string>
+
+    <!-- Add/Edit Alarm -->
+    <string name="alarm_name">ชื่อการแจ้งเตือน</string>
+    <string name="alarm_time">เวลา</string>
+    <string name="alarm_days">วันที่</string>
+    <string name="alarm_sound">เสียงระฆัง</string>
+    <string name="vibration">สั่นสะเทือน</string>
+    <string name="save">บันทึก</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="delete">ลบ</string>
+
+    <!-- Bell Sounds -->
+    <string name="thai_temple_bell">ระฆังวัดไทย</string>
+    <string name="zen_bell">ระฆังเซ็น</string>
+    <string name="church_bell">ระฆังโบสถ์</string>
+
+    <!-- Time Simulator -->
+    <string name="time_simulator">เครื่องจำลองเวลา</string>
+    <string name="current_time">เวลาปัจจุบัน</string>
+    <string name="current_date">วันที่ปัจจุบัน</string>
+    <string name="jump_time">กระโดดเวลา</string>
+    <string name="now">ตอนนี้</string>
+    <string name="set_time_manually">ตั้งเวลาด้วยตนเอง</string>
+    <string name="hour">ชั่วโมง</string>
+    <string name="minute">นาที</string>
+    <string name="set_time">ตั้งเวลา</string>
+    <string name="speed">ความเร็ว</string>
+    <string name="auto_mode">โหมด AUTO</string>
+    <string name="event_logs">บันทึกเหตุการณ์</string>
+
+    <!-- Settings -->
+    <string name="sound_settings">การตั้งค่าเสียง</string>
+    <string name="default_bell_sound">เสียงระฆังเริ่มต้น</string>
+    <string name="volume">ระดับเสียง</string>
+    <string name="vibration_settings">การตั้งค่าการสั่นสะเทือน</string>
+    <string name="vibration_on_alarm">สั่นเมื่อมีการแจ้งเตือน</string>
+    <string name="vibration_pattern">รูปแบบการสั่น</string>
+    <string name="single_vibration">สั่นครั้งเดียว</string>
+    <string name="time_simulation">การจำลองเวลา</string>
+    <string name="default_speed">ความเร็วเริ่มต้น</string>
+    <string name="enable_auto_mode">เปิดโหมด AUTO</string>
+    <string name="language_settings">การตั้งค่าภาษา</string>
+    <string name="app_language">ภาษาแอป</string>
+    <string name="thai">ไทย</string>
+    <string name="font">ฟอนต์</string>
+    <string name="sarabun_regular">สระบุ ปกติ</string>
+    <string name="battery_settings">การตั้งค่าแบตเตอรี่</string>
+    <string name="battery_saver">โหมดประหยัดพลังงาน</string>
+    <string name="auto_shutdown">ปิดการทำงานอัตโนมัติ</string>
+
+    <!-- Notification -->
+    <string name="alarm_notification_title">การแจ้งเตือนระฆัง</string>
+    <string name="alarm_notification_text">เวลาทำสมาธิของคุณถึงแล้ว</string>
+    <string name="stop">หยุด</string>
+    <string name="snooze">พัก</string>
+    <string name="playing_bell_sound">กำลังเล่นระฆังวัดไทย...</string>
+
+    <!-- Quick Jump Times -->
+    <string name="morning">เช้า</string>
+    <string name="noon">กลางวัน</string>
+    <string name="evening">เย็น</string>
+    <string name="midnight">เที่ยงคืน</string>
+    <string name="start_of_day">เริ่มวัน</string>
+
+    <!-- Common -->
+    <string name="enabled">เปิด</string>
+    <string name="disabled">ปิด</string>
+    <string name="yes">ใช่</string>
+    <string name="no">ไม่</string>
+    <string name="ok">ตกลง</string>
+    <string name="confirm">ยืนยัน</string>
+    <string name="warning">คำเตือน</string>
+    <string name="error">ข้อผิดพลาด</string>
+    <string name="success">สำเร็จ</string>
+
+    <!-- Error Messages -->
+    <string name="error_creating_alarm">ไม่สามารถสร้างการแจ้งเตือนได้</string>
+    <string name="error_updating_alarm">ไม่สามารถอัปเดตการแจ้งเตือนได้</string>
+    <string name="error_deleting_alarm">ไม่สามารถลบการแจ้งเตือนได้</string>
+    <string name="invalid_time">เวลาไม่ถูกต้อง</string>
+
+    <!-- Success Messages -->
+    <string name="alarm_created">สร้างการแจ้งเตือนสำเร็จ</string>
+    <string name="alarm_updated">อัปเดตการแจ้งเตือนสำเร็จ</string>
+    <string name="alarm_deleted">ลบการแจ้งเตือนสำเร็จ</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">ต้องการสิทธิ์</string>
+    <string name="notification_permission">ต้องการสิทธิ์การแจ้งเตือนเพื่อทำงาน</string>
+    <string name="grant_permission">อนุญาต</string>
+
+    <!-- Time Formats -->
+    <string name="time_format_24h">HH:mm</string>
+    <string name="date_format">dd MMMM yyyy</string>
+    <string name="datetime_format">dd MMMM yyyy HH:mm</string>
+</resources>

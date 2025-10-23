@@ -12,9 +12,12 @@ import {
   ScrollView,
   Alert,
   Switch,
+  Platform,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Alarm, DayOfWeek, AlarmSound } from '@/types/alarm.types';
+import { ThaiText } from '@/components/ThaiText';
+import { TempleColors } from '@/constants/theme';
 
 const DAYS_OF_WEEK: { key: DayOfWeek; label: string }[] = [
   { key: 'monday', label: 'จันทร์' },
@@ -86,16 +89,16 @@ export default function AddAlarmScreen() {
           style={styles.timeButton}
           onPress={() => setSelectedHour((prev) => (prev === 23 ? 0 : prev + 1))}
         >
-          <AntDesign name="up" size={24} color="#FFA500" />
+          <AntDesign name="up" size={24} color={TempleColors.secondary} />
         </TouchableOpacity>
 
-        <Text style={styles.timeText}>{String(selectedHour).padStart(2, '0')}</Text>
+        <ThaiText weight="bold" style={styles.timeText}>{String(selectedHour).padStart(2, '0')}</ThaiText>
 
         <TouchableOpacity
           style={styles.timeButton}
           onPress={() => setSelectedHour((prev) => (prev === 0 ? 23 : prev - 1))}
         >
-          <AntDesign name="down" size={24} color="#FFA500" />
+          <AntDesign name="down" size={24} color={TempleColors.secondary} />
         </TouchableOpacity>
       </View>
 
@@ -106,16 +109,16 @@ export default function AddAlarmScreen() {
           style={styles.timeButton}
           onPress={() => setSelectedMinute((prev) => (prev === 59 ? 0 : prev + 1))}
         >
-          <AntDesign name="up" size={24} color="#FFA500" />
+          <AntDesign name="up" size={24} color={TempleColors.secondary} />
         </TouchableOpacity>
 
-        <Text style={styles.timeText}>{String(selectedMinute).padStart(2, '0')}</Text>
+        <ThaiText weight="bold" style={styles.timeText}>{String(selectedMinute).padStart(2, '0')}</ThaiText>
 
         <TouchableOpacity
           style={styles.timeButton}
           onPress={() => setSelectedMinute((prev) => (prev === 0 ? 59 : prev - 1))}
         >
-          <AntDesign name="down" size={24} color="#FFA500" />
+          <AntDesign name="down" size={24} color={TempleColors.secondary} />
         </TouchableOpacity>
       </View>
     </View>
@@ -123,7 +126,7 @@ export default function AddAlarmScreen() {
 
   const renderDaySelector = () => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>เลือกวัน</Text>
+      <ThaiText weight="semibold" style={styles.sectionTitle}>เลือกวัน</ThaiText>
       <View style={styles.dayContainer}>
         {DAYS_OF_WEEK.map((day) => (
           <TouchableOpacity
@@ -134,14 +137,14 @@ export default function AddAlarmScreen() {
             ]}
             onPress={() => toggleDay(day.key)}
           >
-            <Text
+            <ThaiText
               style={[
                 styles.dayText,
                 selectedDays.includes(day.key) && styles.dayTextSelected,
               ]}
             >
               {day.label}
-            </Text>
+            </ThaiText>
           </TouchableOpacity>
         ))}
       </View>
@@ -150,7 +153,7 @@ export default function AddAlarmScreen() {
 
   const renderSoundSelector = () => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>เลือกเสียง</Text>
+      <ThaiText weight="semibold" style={styles.sectionTitle}>เลือกเสียง</ThaiText>
       <View style={styles.soundContainer}>
         {ALARM_SOUNDS.map((sound) => (
           <TouchableOpacity
@@ -161,15 +164,15 @@ export default function AddAlarmScreen() {
             ]}
             onPress={() => setSelectedSound(sound.key)}
           >
-            <Text style={styles.soundIcon}>{sound.icon}</Text>
-            <Text
+            <ThaiText style={styles.soundIcon}>{sound.icon}</ThaiText>
+            <ThaiText
               style={[
                 styles.soundText,
                 selectedSound === sound.key && styles.soundTextSelected,
               ]}
             >
               {sound.label}
-            </Text>
+            </ThaiText>
           </TouchableOpacity>
         ))}
       </View>
@@ -179,24 +182,24 @@ export default function AddAlarmScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>เพิ่มนาฬิกา</Text>
-        <Text style={styles.subtitle}>ตั้งเวลาสำหรับการทำสมาธิและฟังธรรม</Text>
+        <ThaiText weight="bold" style={styles.title}>เพิ่มนาฬิกา</ThaiText>
+        <ThaiText style={styles.subtitle}>ตั้งเวลาสำหรับการทำสมาธิและฟังธรรม</ThaiText>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>ชื่อนาฬิกา</Text>
+          <ThaiText weight="semibold" style={styles.sectionTitle}>ชื่อนาฬิกา</ThaiText>
           <TextInput
             style={styles.textInput}
             value={alarmName}
             onChangeText={setAlarmName}
             placeholder="ใส่ชื่อนาฬิกา..."
-            placeholderTextColor="#BDC3C7"
+            placeholderTextColor={TempleColors.textMuted}
           />
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>เวลา</Text>
+          <ThaiText weight="semibold" style={styles.sectionTitle}>เวลา</ThaiText>
           {renderTimePicker()}
         </View>
 
@@ -205,18 +208,18 @@ export default function AddAlarmScreen() {
 
         <View style={styles.section}>
           <View style={styles.switchContainer}>
-            <Text style={styles.switchLabel}>เปิดใช้งานนาฬิกา</Text>
+            <ThaiText style={styles.switchLabel}>เปิดใช้งานนาฬิกา</ThaiText>
             <Switch
               value={isEnabled}
               onValueChange={setIsEnabled}
-              trackColor={{ false: '#E0E0E0', true: '#FFD700' }}
-              thumbColor={isEnabled ? '#FFA500' : '#F5F5F5'}
+              trackColor={{ false: '#E0E0E0', true: TempleColors.primary }}
+              thumbColor={isEnabled ? TempleColors.secondary : '#F5F5F5'}
             />
           </View>
         </View>
 
         <TouchableOpacity style={styles.saveButton} onPress={saveAlarm}>
-          <Text style={styles.saveButtonText}>บันทึกนาฬิกา</Text>
+          <ThaiText weight="semibold" style={styles.saveButtonText}>บันทึกนาฬิกา</ThaiText>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -226,31 +229,37 @@ export default function AddAlarmScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: TempleColors.background,
   },
   header: {
-    backgroundColor: '#FFA500',
+    backgroundColor: TempleColors.secondary,
     paddingTop: 60,
-    paddingBottom: 20,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    minHeight: 120,
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: TempleColors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    }),
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 26,
     color: '#FFFFFF',
     marginBottom: 5,
+    lineHeight: 32,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#FFFFFF',
     opacity: 0.9,
+    lineHeight: 20,
   },
   content: {
     flex: 1,
@@ -261,12 +270,11 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#2C3E50',
+    color: TempleColors.text,
     marginBottom: 12,
   },
   textInput: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: TempleColors.surface,
     borderRadius: 12,
     padding: 15,
     fontSize: 16,
@@ -280,11 +288,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+      elevation: 2,
+    }),
   },
   timeColumn: {
     alignItems: 'center',
@@ -295,16 +307,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF5E5',
   },
   timeText: {
-    fontSize: 48,
+    fontSize: 42,
     fontWeight: 'bold',
     color: '#2C3E50',
-    marginVertical: 10,
+    marginVertical: 8,
+    minWidth: 70,
+    textAlign: 'center',
   },
   timeSeparator: {
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     color: '#FFA500',
-    marginHorizontal: 15,
+    marginHorizontal: 12,
+    lineHeight: 42,
   },
   dayContainer: {
     flexDirection: 'row',
@@ -376,18 +391,25 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: '#2ECC71',
     borderRadius: 15,
-    paddingVertical: 18,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
     alignItems: 'center',
     marginTop: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    minHeight: 60,
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    }),
   },
   saveButtonText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
+    lineHeight: 22,
   },
 });

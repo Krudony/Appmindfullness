@@ -37,17 +37,45 @@ export const Fonts = Platform.select({
     rounded: 'ui-rounded',
     /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: 'ui-monospace',
+    /** Thai fonts */
+    thai: 'SarabunRegular',
+    thaiMedium: 'SarabunMedium',
+    thaiBold: 'SarabunBold',
+    thaiLight: 'SarabunLight',
   },
   default: {
     sans: 'normal',
     serif: 'serif',
     rounded: 'normal',
     mono: 'monospace',
+    /** Thai fonts */
+    thai: 'SarabunRegular',
+    thaiMedium: 'SarabunMedium',
+    thaiBold: 'SarabunBold',
+    thaiLight: 'SarabunLight',
   },
   web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Sarabun', sans-serif",
     serif: "Georgia, 'Times New Roman', serif",
     rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+    /** Thai fonts for web */
+    thai: "'Sarabun', 'Kanit', 'Prompt', sans-serif",
   },
 });
+
+// Temple Modern Theme Colors
+export const TempleColors = {
+  primary: '#FFD700',    // สีทอง
+  secondary: '#FFA500',  // สีส้ม
+  accent: '#FF6B35',     // สีส้มเข้ม
+  background: '#FFF8E1', // สีครีมอ่อน
+  surface: '#FFFFFF',    // สีขาว
+  text: '#2C3E50',       // สีดำเข้ม
+  textLight: '#7F8C8D',  // สีเทา
+  textMuted: '#BDC3C7',  // สีเทาอ่อน
+  success: '#27AE60',    // สีเขียว
+  error: '#E74C3C',      // สีแดง
+  warning: '#F39C12',    // สีเหลือง
+  shadow: 'rgba(0, 0, 0, 0.1)',
+};

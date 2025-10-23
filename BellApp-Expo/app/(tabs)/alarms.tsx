@@ -12,9 +12,12 @@ import {
   TouchableOpacity,
   Alert,
   Switch,
+  Platform,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Alarm } from '@/types/alarm.types';
+import { ThaiText } from '@/components/ThaiText';
+import { TempleColors } from '@/constants/theme';
 
 // Mock data สำหรับการทดสอบ
 const mockAlarms: Alarm[] = [
@@ -96,25 +99,25 @@ export default function AlarmsScreen() {
   const renderAlarmItem = ({ item }: { item: Alarm }) => (
     <View style={styles.alarmCard}>
       <View style={styles.alarmInfo}>
-        <Text style={styles.alarmTime}>{formatTime(item.time)}</Text>
-        <Text style={styles.alarmName}>{item.name}</Text>
-        <Text style={styles.alarmRepeat}>{formatRepeat(item.repeat)}</Text>
-        <Text style={styles.alarmSound}>🔔 {item.sound}</Text>
+        <ThaiText weight="bold" style={styles.alarmTime}>{formatTime(item.time)}</ThaiText>
+        <ThaiText weight="semibold" style={styles.alarmName}>{item.name}</ThaiText>
+        <ThaiText style={styles.alarmRepeat}>{formatRepeat(item.repeat)}</ThaiText>
+        <ThaiText style={styles.alarmSound}>🔔 {item.sound}</ThaiText>
       </View>
 
       <View style={styles.alarmActions}>
         <Switch
           value={item.enabled}
           onValueChange={() => toggleAlarm(item.id)}
-          trackColor={{ false: '#E0E0E0', true: '#FFD700' }}
-          thumbColor={item.enabled ? '#FFA500' : '#F5F5F5'}
+          trackColor={{ false: '#E0E0E0', true: TempleColors.primary }}
+          thumbColor={item.enabled ? TempleColors.secondary : '#F5F5F5'}
         />
 
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => deleteAlarm(item.id)}
         >
-          <AntDesign name="delete" size={20} color="#E74C3C" />
+          <AntDesign name="delete" size={20} color={TempleColors.error} />
         </TouchableOpacity>
       </View>
     </View>
@@ -122,19 +125,19 @@ export default function AlarmsScreen() {
 
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <AntDesign name="clockcircleo" size={80} color="#BDC3C7" />
-      <Text style={styles.emptyTitle}>ยังไม่มีนาฬิกา</Text>
-      <Text style={styles.emptyDescription}>
+      <AntDesign name="clockcircleo" size={80} color={TempleColors.textMuted} />
+      <ThaiText weight="bold" style={styles.emptyTitle}>ยังไม่มีนาฬิกา</ThaiText>
+      <ThaiText style={styles.emptyDescription}>
         แตะที่ปุ่ม "เพิ่ม" เพื่อสร้างนาฬิกาปลุกแรกของคุณ
-      </Text>
+      </ThaiText>
     </View>
   );
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>นาฬิกาปลุก</Text>
-        <Text style={styles.subtitle}>จัดการเวลาสำหรับทำสมาธิและฟังธรรม</Text>
+        <ThaiText weight="bold" style={styles.title}>นาฬิกาปลุก</ThaiText>
+        <ThaiText style={styles.subtitle}>จัดการเวลาสำหรับทำสมาธิและฟังธรรม</ThaiText>
       </View>
 
       <View style={styles.content}>
@@ -157,30 +160,36 @@ export default function AlarmsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: TempleColors.background,
   },
   header: {
-    backgroundColor: '#FFD700',
+    backgroundColor: TempleColors.primary,
     paddingTop: 60,
-    paddingBottom: 20,
+    paddingBottom: 25,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    minHeight: 120,
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: TempleColors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    }),
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#2C3E50',
+    fontSize: 26,
+    color: TempleColors.text,
     marginBottom: 5,
+    lineHeight: 32,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#7F8C8D',
+    fontSize: 15,
+    color: TempleColors.textLight,
+    lineHeight: 20,
   },
   content: {
     flex: 1,
@@ -190,41 +199,46 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   alarmCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: TempleColors.surface,
     borderRadius: 15,
     padding: 20,
     marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: TempleColors.shadow,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+      elevation: 2,
+    }),
   },
   alarmInfo: {
     flex: 1,
   },
   alarmTime: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#2C3E50',
+    fontSize: 30,
+    color: TempleColors.text,
     marginBottom: 5,
+    lineHeight: 36,
+    minWidth: 80,
   },
   alarmName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#34495E',
+    fontSize: 17,
+    color: TempleColors.text,
     marginBottom: 5,
+    lineHeight: 22,
   },
   alarmRepeat: {
     fontSize: 14,
-    color: '#7F8C8D',
+    color: TempleColors.textLight,
     marginBottom: 3,
   },
   alarmSound: {
     fontSize: 14,
-    color: '#FFA500',
+    color: TempleColors.secondary,
     fontStyle: 'italic',
   },
   alarmActions: {
@@ -244,16 +258,15 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#7F8C8D',
+    color: TempleColors.textLight,
     marginTop: 20,
     marginBottom: 10,
   },
   emptyDescription: {
     fontSize: 16,
-    color: '#BDC3C7',
+    color: TempleColors.textMuted,
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 28,
     paddingHorizontal: 40,
   },
 });

@@ -264,7 +264,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#FFFFFF',
     opacity: 0.9,
-    lineHeight: 20,
+    lineHeight: 25,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   content: {
     flex: 1,

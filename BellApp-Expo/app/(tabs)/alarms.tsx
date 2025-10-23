@@ -194,7 +194,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 15,
     color: TempleColors.textLight,
-    lineHeight: 20,
+    lineHeight: 25,
+    paddingTop: 2,
+    paddingBottom: 2,
   },
   content: {
     flex: 1,

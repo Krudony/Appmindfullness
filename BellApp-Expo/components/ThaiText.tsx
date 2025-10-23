@@ -38,7 +38,8 @@ export function ThaiText({
 
     // Use consistent line height for all weights
     // Increased line height for better Thai text rendering
-    return Platform.OS === 'web' ? 1.5 : 24;
+    // Thai voweled characters (สระ อุ, ุ, etc.) need more vertical space
+    return Platform.OS === 'web' ? 1.8 : 28;
   };
 
   return (
@@ -52,8 +53,14 @@ export function ThaiText({
                        weight === 'light' ? '300' :
                        weight === 'medium' ? '500' :
                        weight === 'semibold' ? '600' : '700',
+            // Extra padding for Thai voweled characters
+            paddingTop: 1,
+            paddingBottom: 1,
           } : {
             fontFamily: getFontFamily(),
+            // Extra padding for Thai voweled characters on mobile
+            paddingTop: 1,
+            paddingBottom: 1,
           }),
           // Consistent line height for better layout stability
           lineHeight: getOptimalLineHeight(),

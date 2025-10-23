@@ -37,7 +37,8 @@ export function ThaiText({
     if (lineHeight) return lineHeight;
 
     // Use consistent line height for all weights
-    return Platform.OS === 'web' ? 1.4 : 22;
+    // Increased line height for better Thai text rendering
+    return Platform.OS === 'web' ? 1.5 : 24;
   };
 
   return (

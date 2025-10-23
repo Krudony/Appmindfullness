@@ -169,11 +169,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    minHeight: 140,
+    minHeight: 160,
     width: '100%',
     alignItems: 'flex-start',
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      minWidth: '100%',
     } : {
       shadowColor: TempleColors.shadow,
       shadowOffset: { width: 0, height: 2 },

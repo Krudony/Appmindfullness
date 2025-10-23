@@ -1,243 +1,346 @@
 /**
- * หน้าฟีเจอร์พิเศษ - Plus Tab
- * สำหรับ premium features, statistics และข้อมูลเพิ่มเติม
+ * หน้าเพิ่มเติม - More Tab
+ * ใช้สำหรับทดสอบและเปรียบเทียบการแสดงผลของ ThaiText กับ Text component
+ * เพื่อหาสาเหตุที่แท้จริงของปัญหาการแสดงผลตัวหนังสือภาษาไทย
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
-  Alert,
+  TextInput,
+  Platform,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { ThaiText } from '@/components/ThaiText';
+import { TempleColors } from '@/constants/theme';
 
 export default function PlusScreen() {
-  const handlePremiumFeature = (feature: string) => {
-    Alert.alert(
-      'ฟีเจอร์พรีเมียม',
-      `${feature}\n\n` +
-      'ฟีเจอร์นี้จะพร้อมใช้งานในเวอร์ชันพรีเมียมเร็วๆ นี้!\n\n' +
-      'รอติดตามอัปเดตจากเรา',
-      [{ text: 'ตกลง', style: 'default' }]
-    );
-  };
+  const [testText, setTestText] = useState('เพิ่มนาฬิกา');
+  const [testTime, setTestTime] = useState('06:59');
+  const [useThaiText, setUseThaiText] = useState(true);
 
-  const handleStatistics = () => {
-    Alert.alert(
-      'สถิติการใช้งาน',
-      '📊 สถิติของคุณ\n\n' +
-      'จำนวนนาฬิกา: 2\n' +
-      'ทำงานทั้งหมด: 12 ครั้ง\n' +
-      'เปิดใช้งาน: 5 วัน\n\n' +
-      'สถิติจะพร้อมใช้งานในเวอร์ชันถัดไป',
-      [{ text: 'ตกลง', style: 'default' }]
-    );
-  };
+  // Test cases สำหรับเปรียบเทียบ
+  const testCases = [
+    { text: 'เพิ่มนาฬิกา', label: 'หัวข้อหลัก' },
+    { text: 'ทำสมาธิ', label: 'ชื่อนาฬิกา' },
+    { text: 'ตั้งเวลาสำหรับการทำสมาธิและฟังธรรม', label: 'คำอธิบาย' },
+    { text: 'จันทร์ อังคาร พุธ พฤหัสบดี ศุกร์ เสาร์ อาทิตย์', label: 'วันทั้งหมด' },
+    { text: '06:59', label: 'เวลา' },
+    { text: 'สวดมนต์', label: 'คำสั้น' },
+    { text: 'ระฆังวัด', label: 'เสียงนาฬิกา' },
+  ];
 
-  const handleMeditationGuide = () => {
-    Alert.alert(
-      'คู่มือการทำสมาธิ',
-      '🧘‍♀️ คำแนะนำการทำสมาธิ\n\n' +
-      '1. หาที่สงบและนั่งสมาธิ\n' +
-      '2. ปิดตาและหายใจเข้าออกลึกๆ\n' +
-      '3. มุ่งความสนใจไปที่ลมหายใจ\n' +
-      '4. เริ่มต้น 5-10 นาทีต่อครั้ง\n' +
-      '5. ทำประจำทุกวันเพื่อผลดีกว่า\n\n' +
-      'คู่มือฉบับเต็มจะมาในเร็วๆ นี้',
-      [{ text: 'ตกลง', style: 'default' }]
-    );
-  };
+  const timeNumbers = ['01', '06', '10', '15', '23', '30', '45', '59'];
 
-  const handleTempleInfo = () => {
-    Alert.alert(
-      'ข้อมูลวัด',
-      '🏯 วัดใกล้คุณ\n\n' +
-      'กำลังพัฒนาฟีเจอร์ค้นหาวัดใกล้ๆ\n' +
-      'และข้อมูลกำหนดการทำบุญ\n\n' +
-      'จะพร้อมใช้งานในเวอร์ชันถัดไป',
-      [{ text: 'ตกลง', style: 'default' }]
-    );
-  };
-
-  const handleShareApp = () => {
-    Alert.alert(
-      'แชร์แอป',
-      'ขอบคุณที่สนใจแชร์ BellApp!\n\n' +
-      'ฟีเจอร์แชร์จะมาในเวอร์ชันถัดไป\n\n' +
-      'ช่วยเหลือเราให้แอปเติบโตขึ้น',
-      [{ text: 'ตกลง', style: 'default' }]
-    );
-  };
-
-  const FeatureCard = ({
-    icon,
-    title,
-    description,
-    onPress,
-    isPremium = false
-  }: {
-    icon: string;
-    title: string;
-    description: string;
-    onPress: () => void;
-    isPremium?: boolean;
-  }) => (
-    <TouchableOpacity style={styles.featureCard} onPress={onPress}>
-      <View style={styles.featureHeader}>
-        <Text style={styles.featureIcon}>{icon}</Text>
-        {isPremium && (
-          <View style={styles.premiumBadge}>
-            <Text style={styles.premiumText}>PRO</Text>
-          </View>
-        )}
-      </View>
-      <Text style={styles.featureTitle}>{title}</Text>
-      <Text style={styles.featureDescription}>{description}</Text>
-      <View style={styles.featureFooter}>
-        <Text style={styles.featureAction}>
-          {isPremium ? 'อัปเกรด' : 'ดูเพิ่มเติม'}
+  const TestComponent = ({ children, style, ...props }: any) => {
+    if (useThaiText) {
+      return (
+        <ThaiText style={style} {...props}>
+          {children}
+        </ThaiText>
+      );
+    } else {
+      return (
+        <Text style={style} {...props}>
+          {children}
         </Text>
-        <AntDesign name="right" size={16} color="#FFA500" />
+      );
+    }
+  };
+
+  const renderTestCase = (testCase: typeof testCases[0], index: number) => (
+    <View key={index} style={styles.testCase}>
+      <View style={styles.testCaseHeader}>
+        <TestComponent weight="semibold" style={styles.testCaseLabel}>
+          {testCase.label}
+        </TestComponent>
       </View>
-    </TouchableOpacity>
+      <View style={styles.testCases}>
+        <View style={styles.testCaseColumn}>
+          <TestComponent weight="regular" style={styles.testTextRegular}>
+            {testCase.text}
+          </TestComponent>
+        </View>
+        <View style={styles.testCaseColumn}>
+          <TestComponent weight="semibold" style={styles.testTextSemibold}>
+            {testCase.text}
+          </TestComponent>
+        </View>
+        <View style={styles.testCaseColumn}>
+          <TestComponent weight="bold" style={styles.testTextBold}>
+            {testCase.text}
+          </TestComponent>
+        </View>
+      </View>
+    </View>
   );
 
-  const StatsCard = ({
-    label,
-    value,
-    icon
-  }: {
-    label: string;
-    value: string;
-    icon: string;
-  }) => (
-    <View style={styles.statsCard}>
-      <Text style={styles.statsIcon}>{icon}</Text>
-      <Text style={styles.statsValue}>{value}</Text>
-      <Text style={styles.statsLabel}>{label}</Text>
+  const renderTimeTest = () => (
+    <View style={styles.section}>
+      <TestComponent weight="bold" style={styles.sectionTitle}>
+        ทดสอบการแสดงผลตัวเลขเวลา
+      </TestComponent>
+      <View style={styles.timeTestGrid}>
+        {timeNumbers.map((time, index) => (
+          <View key={index} style={styles.timeTestItem}>
+            <TestComponent weight="bold" style={styles.timeTestNumber}>
+              {time}
+            </TestComponent>
+          </View>
+        ))}
+      </View>
+      <View style={styles.timeComparison}>
+        <View style={styles.timeComparisonItem}>
+          <TestComponent weight="bold" style={styles.timeLarge}>
+            06:59
+          </TestComponent>
+        </View>
+        <View style={styles.timeComparisonItem}>
+          <TestComponent weight="bold" style={styles.timeLarge2}>
+            18:30
+          </TestComponent>
+        </View>
+        <View style={styles.timeComparisonItem}>
+          <TestComponent weight="bold" style={styles.timeLarge3}>
+            23:45
+          </TestComponent>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderHeaderTest = () => (
+    <View style={styles.section}>
+      <TestComponent weight="bold" style={styles.sectionTitle}>
+        ทดสอบหัวข้อ (เทียบกับหน้าอื่น)
+      </TestComponent>
+
+      {/* Header แบบที่ 1: คล้ายหน้า Alarms */}
+      <View style={[styles.testHeader, { backgroundColor: TempleColors.primary }]}>
+        <TestComponent weight="bold" style={[styles.testHeaderTitle, { color: TempleColors.text }]}>
+          นาฬิกาปลุก
+        </TestComponent>
+        <TestComponent style={[styles.testHeaderSubtitle, { color: TempleColors.textLight }]}>
+          จัดการเวลาสำหรับทำสมาธิและฟังธรรม
+        </TestComponent>
+      </View>
+
+      {/* Header แบบที่ 2: คล้ายหน้า Add Alarm */}
+      <View style={[styles.testHeader, { backgroundColor: TempleColors.secondary }]}>
+        <TestComponent weight="bold" style={[styles.testHeaderTitle, { color: '#FFFFFF' }]}>
+          เพิ่มนาฬิกา
+        </TestComponent>
+        <TestComponent style={[styles.testHeaderSubtitle, { color: '#FFFFFF', opacity: 0.9 }]}>
+          ตั้งเวลาสำหรับการทำสมาธิและฟังธรรม
+        </TestComponent>
+      </View>
+
+      {/* Header แบบที่ 3: ขนาดใหญ่ขึ้น */}
+      <View style={[styles.testHeader, { backgroundColor: '#2C3E50', minHeight: 160 }]}>
+        <TestComponent weight="bold" style={[styles.testHeaderTitle, { color: '#FFFFFF', fontSize: 32 }]}>
+          ทดสอบหัวข้อใหญ่
+        </TestComponent>
+        <TestComponent style={[styles.testHeaderSubtitle, { color: '#FFFFFF', fontSize: 17 }]}>
+          ทดสอบการแสดงผลตัวหนังสือภาษาไทยขนาดใหญ่
+        </TestComponent>
+      </View>
+    </View>
+  );
+
+  const renderLayoutTest = () => (
+    <View style={styles.section}>
+      <TestComponent weight="bold" style={styles.sectionTitle}>
+        ทดสอบการจัด Layout
+      </TestComponent>
+
+      <View style={styles.layoutTest}>
+        <View style={styles.layoutItem}>
+          <TestComponent weight="bold" style={styles.layoutTitle}>
+            ชื่อรายการ
+          </TestComponent>
+          <TestComponent style={styles.layoutSubtitle}>
+            คำอธิบายสั้นๆ
+          </TestComponent>
+        </View>
+
+        <View style={styles.layoutActions}>
+          <TestComponent style={styles.layoutTime}>
+            06:59
+          </TestComponent>
+          <View style={styles.layoutSwitch}>
+            <View style={[styles.switchKnob, { backgroundColor: '#FFA500' }]} />
+          </View>
+        </View>
+      </View>
     </View>
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={TempleColors.primary} />
+
       <View style={styles.header}>
-        <Text style={styles.title}>เพิ่มเติม</Text>
-        <Text style={styles.subtitle}>ฟีเจอร์พิเศษและข้อมูลเพิ่มเติม</Text>
+        <TestComponent weight="bold" style={styles.title}>
+          ทดสอบการแสดงผล
+        </TestComponent>
+        <TestComponent style={styles.subtitle}>
+          เปรียบเทียบ ThaiText กับ Text Component
+        </TestComponent>
+      </View>
+
+      <View style={styles.controls}>
+        <TouchableOpacity
+          style={[styles.controlButton, useThaiText && styles.controlButtonActive]}
+          onPress={() => setUseThaiText(true)}
+        >
+          <TestComponent weight="semibold" style={[styles.controlButtonText, useThaiText && styles.controlButtonTextActive]}>
+            ThaiText
+          </TestComponent>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.controlButton, !useThaiText && styles.controlButtonActive]}
+          onPress={() => setUseThaiText(false)}
+        >
+          <TestComponent weight="semibold" style={[styles.controlButtonText, !useThaiText && styles.controlButtonTextActive]}>
+            Text
+          </TestComponent>
+        </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Statistics Section */}
+        {/* ทดสอบตัวหนังสือพื้นฐาน */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>สถิติการใช้งาน</Text>
-          <View style={styles.statsContainer}>
-            <StatsCard label="นาฬิกาทั้งหมด" value="2" icon="⏰" />
-            <StatsCard label="ทำงานแล้ว" value="12" icon="✅" />
-            <StatsCard label="วันที่ใช้" value="5" icon="📅" />
+          <TestComponent weight="bold" style={styles.sectionTitle}>
+            ทดสอบตัวหนังสือพื้นฐาน
+          </TestComponent>
+          <View style={styles.componentInfo}>
+            <TestComponent style={styles.componentType}>
+              กำลังใช้: {useThaiText ? 'ThaiText Component' : 'Text Component'}
+            </TestComponent>
           </View>
-          <TouchableOpacity style={styles.viewAllButton} onPress={handleStatistics}>
-            <Text style={styles.viewAllText}>ดูสถิติทั้งหมด</Text>
-            <AntDesign name="right" size={16} color="#FFA500" />
-          </TouchableOpacity>
+          {testCases.map(renderTestCase)}
         </View>
 
-        {/* Premium Features Section */}
+        {renderTimeTest()}
+        {renderHeaderTest()}
+        {renderLayoutTest()}
+
+        {/* ทดสอบแบบกำหนดเอง */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>ฟีเจอร์พรีเมียม</Text>
-          <FeatureCard
-            icon="🎵"
-            title="เสียงระฆังแบบกำหนดเอง"
-            description="อัปโหลดเสียงระฆังจากวัดที่คุณชื่นชอบ"
-            onPress={() => handlePremiumFeature('เสียงระฆังแบบกำหนดเอง')}
-            isPremium
+          <TestComponent weight="bold" style={styles.sectionTitle}>
+            ทดสอบแบบกำหนดเอง
+          </TestComponent>
+          <TextInput
+            style={styles.textInput}
+            value={testText}
+            onChangeText={setTestText}
+            placeholder="ใส่ข้อความทดสอบ..."
+            placeholderTextColor={TempleColors.textMuted}
           />
-          <FeatureCard
-            icon="☁️"
-            title="สัญซิงค์ข้อมูล"
-            description="ซิงค์ข้อมูลนาฬิกาข้ามอุปกรณ์ทั้งหมดของคุณ"
-            onPress={() => handlePremiumFeature('สัญซิงค์ข้อมูล')}
-            isPremium
-          />
-          <FeatureCard
-            icon="📈"
-            title="รายงานการทำสมาธิ"
-            description="ติดตามความคืบหน้าและสถิติการทำสมาธิของคุณ"
-            onPress={() => handlePremiumFeature('รายงานการทำสมาธิ')}
-            isPremium
-          />
+          <View style={styles.customTest}>
+            <TestComponent weight="regular" style={styles.customTestText}>
+              Regular: {testText}
+            </TestComponent>
+            <TestComponent weight="semibold" style={styles.customTestText}>
+              Semibold: {testText}
+            </TestComponent>
+            <TestComponent weight="bold" style={styles.customTestText}>
+              Bold: {testText}
+            </TestComponent>
+          </View>
         </View>
 
-        {/* Tools Section */}
+        {/* ข้อมูลระบบ */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>เครื่องมือ</Text>
-          <FeatureCard
-            icon="🧘"
-            title="คู่มือการทำสมาธิ"
-            description="เรียนรู้วิธีการทำสมาธิสำหรับผู้เริ่มต้น"
-            onPress={handleMeditationGuide}
-          />
-          <FeatureCard
-            icon="🏯"
-            title="ข้อมูลวัด"
-            description="ค้นหาวัดใกล้คุณและกำหนดการทำบุญ"
-            onPress={handleTempleInfo}
-          />
-          <FeatureCard
-            icon="📤"
-            title="แชร์แอป"
-            description="แชร์ BellApp ให้เพื่อนและครอบครัว"
-            onPress={handleShareApp}
-          />
-        </View>
-
-        {/* Upgrade Banner */}
-        <View style={styles.upgradeBanner}>
-          <Text style={styles.upgradeTitle}>อัปเกรดเป็น BellApp Pro</Text>
-          <Text style={styles.upgradeDescription}>
-            ปลดล็อคฟีเจอร์พรีเมียมทั้งหมดและสนับสนุนการพัฒนาแอป
-          </Text>
-          <TouchableOpacity
-            style={styles.upgradeButton}
-            onPress={() => handlePremiumFeature('BellApp Pro')}
-          >
-            <Text style={styles.upgradeButtonText}>อัปเกรดตอนนี้</Text>
-          </TouchableOpacity>
+          <TestComponent weight="bold" style={styles.sectionTitle}>
+            ข้อมูลระบบ
+          </TestComponent>
+          <View style={styles.systemInfo}>
+            <TestComponent style={styles.systemInfoText}>
+              Platform: {Platform.OS}
+            </TestComponent>
+            <TestComponent style={styles.systemInfoText}>
+              Font Family: {useThaiText ? 'Sarabun (ThaiText)' : 'System (Text)'}
+            </TestComponent>
+          </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F9FA',
+    backgroundColor: TempleColors.background,
   },
   header: {
-    backgroundColor: '#1ABC9C',
-    paddingTop: 60,
+    backgroundColor: TempleColors.primary,
+    paddingTop: 65,
     paddingBottom: 20,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    minHeight: 140,
+    width: '100%',
+    alignItems: 'flex-start',
+    ...(Platform.OS === 'web' ? {
+      boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+    } : {
+      shadowColor: TempleColors.shadow,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 3,
+    }),
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: TempleColors.text,
     marginBottom: 5,
+    lineHeight: 34,
+    width: '100%',
+    flexShrink: 0,
   },
   subtitle: {
+    fontSize: 15,
+    color: TempleColors.textLight,
+    lineHeight: 20,
+  },
+  controls: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#FFFFFF',
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 12,
+    gap: 10,
+  },
+  controlButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+  },
+  controlButtonActive: {
+    backgroundColor: TempleColors.secondary,
+  },
+  controlButtonText: {
     fontSize: 16,
+    color: '#7F8C8D',
+  },
+  controlButtonTextActive: {
     color: '#FFFFFF',
-    opacity: 0.9,
   },
   content: {
     flex: 1,
@@ -248,138 +351,196 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#2C3E50',
+    color: TempleColors.text,
+    marginBottom: 12,
+  },
+  componentInfo: {
+    backgroundColor: '#E8F4FD',
+    padding: 10,
+    borderRadius: 8,
     marginBottom: 15,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    gap: 12,
+  componentType: {
+    fontSize: 14,
+    color: '#1976D2',
+    textAlign: 'center',
   },
-  statsCard: {
+  testCase: {
+    marginBottom: 15,
+  },
+  testCaseHeader: {
+    marginBottom: 8,
+  },
+  testCaseLabel: {
+    fontSize: 14,
+    color: TempleColors.textLight,
+    marginBottom: 5,
+  },
+  testCases: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  testCaseColumn: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    borderRadius: 15,
-    padding: 16,
+    padding: 15,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
   },
-  statsIcon: {
-    fontSize: 24,
-    marginBottom: 8,
-  },
-  statsValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2C3E50',
-    marginBottom: 4,
-  },
-  statsLabel: {
-    fontSize: 12,
-    color: '#7F8C8D',
+  testTextRegular: {
+    fontSize: 16,
+    color: TempleColors.text,
     textAlign: 'center',
   },
-  viewAllButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 12,
-    paddingVertical: 12,
-  },
-  viewAllText: {
+  testTextSemibold: {
     fontSize: 16,
-    color: '#FFA500',
-    marginRight: 8,
-    fontWeight: '500',
+    color: TempleColors.text,
+    textAlign: 'center',
   },
-  featureCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 15,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  featureHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
-  featureIcon: {
-    fontSize: 28,
-  },
-  premiumBadge: {
-    backgroundColor: '#FFD700',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  premiumText: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: '#2C3E50',
-  },
-  featureTitle: {
+  testTextBold: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#2C3E50',
-    marginBottom: 6,
+    color: TempleColors.text,
+    textAlign: 'center',
   },
-  featureDescription: {
-    fontSize: 14,
-    color: '#7F8C8D',
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-  featureFooter: {
+  timeTestGrid: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  featureAction: {
-    fontSize: 14,
-    color: '#FFA500',
-    fontWeight: '500',
-  },
-  upgradeBanner: {
-    backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    borderRadius: 20,
-    padding: 24,
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: 10,
     marginBottom: 20,
   },
-  upgradeTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 8,
-    textAlign: 'center',
+  timeTestItem: {
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    minWidth: 70,
+    alignItems: 'center',
   },
-  upgradeDescription: {
-    fontSize: 14,
-    color: '#FFFFFF',
-    opacity: 0.9,
-    textAlign: 'center',
-    marginBottom: 16,
+  timeTestNumber: {
+    fontSize: 24,
+    color: TempleColors.text,
+  },
+  timeComparison: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#FFFFFF',
+    padding: 20,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  timeComparisonItem: {
+    alignItems: 'center',
+  },
+  timeLarge: {
+    fontSize: 36,
+    color: TempleColors.text,
+    fontWeight: 'bold',
+  },
+  timeLarge2: {
+    fontSize: 42,
+    color: TempleColors.text,
+    fontWeight: 'bold',
+  },
+  timeLarge3: {
+    fontSize: 48,
+    color: TempleColors.text,
+    fontWeight: 'bold',
+  },
+  testHeader: {
+    padding: 20,
+    borderRadius: 15,
+    marginBottom: 15,
+    width: '100%',
+    alignItems: 'flex-start',
+  },
+  testHeaderTitle: {
+    fontSize: 28,
+    marginBottom: 5,
+    lineHeight: 34,
+    width: '100%',
+    flexShrink: 0,
+  },
+  testHeaderSubtitle: {
+    fontSize: 15,
     lineHeight: 20,
   },
-  upgradeButton: {
+  layoutTest: {
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 20,
+    padding: 20,
+    borderRadius: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
-  upgradeButtonText: {
+  layoutItem: {
+    flex: 1,
+  },
+  layoutTitle: {
+    fontSize: 17,
+    color: TempleColors.text,
+    marginBottom: 5,
+  },
+  layoutSubtitle: {
+    fontSize: 14,
+    color: TempleColors.textLight,
+  },
+  layoutActions: {
+    alignItems: 'center',
+    gap: 15,
+  },
+  layoutTime: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#764ba2',
+    color: TempleColors.secondary,
+    fontWeight: 'bold',
+  },
+  layoutSwitch: {
+    width: 44,
+    height: 26,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 13,
+    justifyContent: 'center',
+  },
+  switchKnob: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    alignSelf: 'flex-start',
+    marginLeft: 2,
+  },
+  textInput: {
+    backgroundColor: TempleColors.surface,
+    borderRadius: 12,
+    padding: 15,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    marginBottom: 15,
+  },
+  customTest: {
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    gap: 10,
+  },
+  customTestText: {
+    fontSize: 16,
+    color: TempleColors.text,
+  },
+  systemInfo: {
+    backgroundColor: '#F5F5F5',
+    padding: 15,
+    borderRadius: 12,
+    gap: 5,
+  },
+  systemInfoText: {
+    fontSize: 14,
+    color: TempleColors.textLight,
   },
 });

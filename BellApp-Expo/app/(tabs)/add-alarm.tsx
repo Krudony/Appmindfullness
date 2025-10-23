@@ -238,11 +238,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    minHeight: 140,
+    minHeight: 160,
     width: '100%',
     alignItems: 'flex-start',
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+      minWidth: '100%',
     } : {
       shadowColor: TempleColors.shadow,
       shadowOffset: { width: 0, height: 2 },
@@ -292,7 +293,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
     padding: 20,
-    minWidth: 250,
+    minWidth: 280,
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
     } : {
@@ -304,7 +305,8 @@ const styles = StyleSheet.create({
     }),
   },
   timeColumn: {
-    width: 90,
+    width: 100,
+    minWidth: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -318,8 +320,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#2C3E50',
     marginVertical: 8,
-    width: 80,
+    width: 90,
+    minWidth: 90,
     textAlign: 'center',
+    lineHeight: 50,
   },
   timeSeparator: {
     fontSize: 36,

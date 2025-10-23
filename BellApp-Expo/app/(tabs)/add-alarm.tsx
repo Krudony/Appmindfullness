@@ -239,6 +239,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     minHeight: 140,
+    width: '100%',
+    alignItems: 'flex-start',
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     } : {
@@ -254,6 +256,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginBottom: 5,
     lineHeight: 34,
+    width: '100%',
+    flexShrink: 0,
   },
   subtitle: {
     fontSize: 15,
@@ -288,6 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 15,
     padding: 20,
+    minWidth: 250,
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
     } : {
@@ -299,7 +304,9 @@ const styles = StyleSheet.create({
     }),
   },
   timeColumn: {
+    width: 90,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   timeButton: {
     padding: 10,
@@ -311,9 +318,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#2C3E50',
     marginVertical: 8,
-    minWidth: 85,
+    width: 80,
     textAlign: 'center',
-    paddingHorizontal: 5,
   },
   timeSeparator: {
     fontSize: 36,

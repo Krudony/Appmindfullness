@@ -33,51 +33,28 @@ export function ThaiText({
     }
   };
 
-  const getWebFallback = () => {
-    switch (weight) {
-      case 'light': return '300';
-      case 'medium': return '500';
-      case 'semibold': return '600';
-      case 'bold': return '700';
-      default: return '400';
-    }
-  };
-
   const getOptimalLineHeight = () => {
     if (lineHeight) return lineHeight;
 
-    // Default line heights based on font weight and platform
-    if (Platform.OS === 'web') {
-      switch (weight) {
-        case 'light': return 1.5;
-        case 'medium': return 1.6;
-        case 'semibold': return 1.6;
-        case 'bold': return 1.5;
-        default: return 1.6;
-      }
-    }
-
-    // Mobile: pixel values
-    switch (weight) {
-      case 'light': return 22;
-      case 'medium': return 24;
-      case 'semibold': return 24;
-      case 'bold': return 22;
-      default: return 24;
-    }
+    // Use consistent line height for all weights
+    return Platform.OS === 'web' ? 1.4 : 22;
   };
 
   return (
     <Text
       style={[
         {
-          fontFamily: getFontFamily(),
-          // Web fallback for better compatibility
-          ...(Platform.OS === 'web' && {
-            fontFamily: "'Sarabun', 'Kanit', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            fontWeight: getWebFallback(),
+          // Simplified font family approach
+          ...(Platform.OS === 'web' ? {
+            fontFamily: "'Sarabun', 'Kanit', 'Prompt', sans-serif",
+            fontWeight: weight === 'regular' ? '400' :
+                       weight === 'light' ? '300' :
+                       weight === 'medium' ? '500' :
+                       weight === 'semibold' ? '600' : '700',
+          } : {
+            fontFamily: getFontFamily(),
           }),
-          // Optimal line height for Thai text
+          // Consistent line height for better layout stability
           lineHeight: getOptimalLineHeight(),
         },
         style,

@@ -170,6 +170,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     minHeight: 140,
+    width: '100%',
+    alignItems: 'flex-start',
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     } : {
@@ -185,6 +187,8 @@ const styles = StyleSheet.create({
     color: TempleColors.text,
     marginBottom: 5,
     lineHeight: 34,
+    width: '100%',
+    flexShrink: 0,
   },
   subtitle: {
     fontSize: 15,

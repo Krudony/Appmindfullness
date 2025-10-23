@@ -164,12 +164,12 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: TempleColors.primary,
-    paddingTop: 60,
-    paddingBottom: 25,
+    paddingTop: 65,
+    paddingBottom: 30,
     paddingHorizontal: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    minHeight: 120,
+    minHeight: 140,
     ...(Platform.OS === 'web' ? {
       boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     } : {
@@ -181,10 +181,10 @@ const styles = StyleSheet.create({
     }),
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     color: TempleColors.text,
     marginBottom: 5,
-    lineHeight: 32,
+    lineHeight: 34,
   },
   subtitle: {
     fontSize: 15,
